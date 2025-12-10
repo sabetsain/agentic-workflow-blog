@@ -38,6 +38,8 @@ The agent workflow follows this sequence:
 
 The workflow is orchestrated through **agent handovers**, where each agent completes its work and explicitly hands off to the next agent in the chain.
 
+**How it works**: When an agent completes its task, it mentions the next agent using `@agent-name` syntax. This triggers the next agent to begin its work with the provided context. The mention acts as both a notification and a handoff of responsibility, ensuring clear transitions between workflow stages.
+
 #### Step 1: Invoke develop-agent
 ```
 @develop-agent please implement [feature description]
