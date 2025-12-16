@@ -1,3 +1,6 @@
 # Calculator Module Requirements
 # This module has no external dependencies for core functionality
-# Development dependencies can be added here as needed
+
+# Development dependencies for testing
+pytest>=7.0
+pytest-cov>=4.0
