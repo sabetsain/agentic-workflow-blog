@@ -27,15 +27,31 @@ The calculator module provides five functions for performing basic arithmetic op
 
 All functions support both integers and floating-point numbers, handle edge cases gracefully, and include comprehensive error handling.
 
+### Modular Architecture
+
+The calculator has been refactored with a clean modular architecture:
+
+- **Isolated operation modules**: Each arithmetic operation (`add`, `subtract`, `multiply`, `divide`) is implemented in its own dedicated module within the `operations/` package
+- **Central dispatcher**: The `calculate()` function serves as a unified interface in `calculator.py`
+- **Full backward compatibility**: All existing APIs remain unchanged - your code will work exactly as before
+
+**Benefits of the modular design:**
+- 🔧 **Maintainability**: Each operation is isolated, making bugs easier to identify and fix
+- 📈 **Scalability**: New operations can be added without modifying existing code
+- ✅ **Testability**: Operations can be tested independently with focused unit tests
+- 📚 **Readability**: Clear separation of concerns makes the codebase easier to understand
+
 ### Features
 
 ✓ Simple, intuitive API  
+✓ Modular architecture with isolated operations  
 ✓ Support for integers and floats  
 ✓ Handles negative numbers and zero  
 ✓ Division by zero protection  
 ✓ Type-flexible (works with mixed int/float inputs)  
 ✓ 100% test coverage  
 ✓ Well-documented with docstrings  
+✓ Full backward compatibility  
 
 ## Installation
 
@@ -70,7 +86,14 @@ All functions support both integers and floating-point numbers, handle edge case
 ## Quick Start
 
 ```python
+# Standard import (recommended - backward compatible)
 from src.calculator import add, subtract, multiply, divide, calculate
+
+# Alternative: Import from package root
+from src import add, subtract, multiply, divide, calculate
+
+# Alternative: Import directly from operations module (advanced)
+from src.operations import add, subtract, multiply, divide
 
 # Using individual functions
 result = add(10, 5)          # Returns: 15
@@ -428,12 +451,17 @@ tests/test_calculator.py::TestAddition::test_add_floats PASSED
 ...
 
 ---------- coverage: platform linux, python 3.x -----------
-Name                    Stmts   Miss  Cover   Missing
------------------------------------------------------
-src/__init__.py             3      0   100%
-src/calculator.py          26      0   100%
------------------------------------------------------
-TOTAL                      29      0   100%
+Name                              Stmts   Miss  Cover   Missing
+---------------------------------------------------------------
+src/__init__.py                       3      0   100%
+src/calculator.py                    11      0   100%
+src/operations/__init__.py            4      0   100%
+src/operations/addition.py            3      0   100%
+src/operations/subtraction.py         3      0   100%
+src/operations/multiplication.py      3      0   100%
+src/operations/division.py            5      0   100%
+---------------------------------------------------------------
+TOTAL                                32      0   100%
 
 ===================== 45 passed in 0.15s =====================
 ```
@@ -443,35 +471,67 @@ TOTAL                      29      0   100%
 ```
 agentic-workflow-blog/
 ├── src/
-│   ├── __init__.py          # Package initialization, exports all functions
-│   └── calculator.py        # Main calculator implementation
+│   ├── __init__.py              # Package initialization, exports all functions
+│   ├── calculator.py            # Main calculator with calculate() dispatcher
+│   └── operations/              # Modular operations package
+│       ├── __init__.py          # Operations package exports
+│       ├── addition.py          # Addition operation
+│       ├── subtraction.py       # Subtraction operation
+│       ├── multiplication.py    # Multiplication operation
+│       └── division.py          # Division operation
 ├── tests/
-│   └── test_calculator.py   # Comprehensive test suite (45 tests)
-├── .gitignore               # Python-specific ignore patterns
-├── pyproject.toml           # Package configuration and metadata
-├── requirements.txt         # Dependencies (currently empty - no external deps)
-├── CALCULATOR.md            # This documentation file
-└── README.md                # Main repository README
+│   └── test_calculator.py       # Comprehensive test suite (45 tests)
+├── .gitignore                   # Python-specific ignore patterns
+├── pyproject.toml               # Package configuration and metadata
+├── requirements.txt             # Dependencies (currently empty - no external deps)
+├── CALCULATOR.md                # This documentation file
+└── README.md                    # Main repository README
 ```
+
+### Modular Architecture Details
+
+The calculator now uses a clean, modular architecture:
+
+**operations/ package** (NEW)
+- Each arithmetic operation is implemented in its own dedicated module
+- `addition.py` - Contains the `add()` function
+- `subtraction.py` - Contains the `subtract()` function
+- `multiplication.py` - Contains the `multiply()` function
+- `division.py` - Contains the `divide()` function
+- `__init__.py` - Exports all operations for easy importing
+
+**Benefits:**
+- ✅ **Isolation**: Each operation is self-contained and independent
+- ✅ **Maintainability**: Changes to one operation don't affect others
+- ✅ **Testability**: Operations can be unit tested in isolation
+- ✅ **Scalability**: New operations can be added as separate modules
+- ✅ **Backward Compatibility**: All existing import statements continue to work
 
 ### Key Files
 
 **src/calculator.py**
-- Contains all five calculator functions
-- Includes comprehensive docstrings
-- Implements error handling for edge cases
+- Contains the `calculate()` dispatcher function
+- Imports operations from the operations package
+- Implements operation routing and error handling
 - No external dependencies
+
+**src/operations/*.py**
+- Individual operation modules (addition, subtraction, multiplication, division)
+- Each module contains a single, focused function
+- Comprehensive docstrings in each module
+- Simple, testable implementations
 
 **src/__init__.py**
 - Exports all calculator functions for easy importing
 - Defines package version (`__version__ = '0.1.0'`)
 - Lists public API in `__all__`
+- Maintains backward compatibility
 
 **tests/test_calculator.py**
 - 45 comprehensive test cases
 - Organized into 6 test classes by functionality
 - Uses pytest framework
-- Achieves 100% code coverage
+- Achieves 100% code coverage across all modules
 
 **pyproject.toml**
 - Modern Python package configuration
@@ -490,7 +550,9 @@ agentic-workflow-blog/
 
 ## Additional Resources
 
-- **Source Code**: See `src/calculator.py` for implementation details
+- **Source Code**: 
+  - See `src/calculator.py` for the main dispatcher implementation
+  - See `src/operations/` for individual operation implementations
 - **Tests**: See `tests/test_calculator.py` for usage examples and edge cases
 - **Package Config**: See `pyproject.toml` for package metadata
 

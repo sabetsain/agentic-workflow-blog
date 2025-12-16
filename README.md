@@ -98,11 +98,19 @@ Currently, all agents are placeholders ready to be configured with concrete task
 
 ## Demo Project: Calculator Module
 
-This repository includes a complete working example - a Python calculator module - that demonstrates the full agent workflow in action:
+This repository includes a complete working example - a Python calculator module with a **modern modular architecture** - that demonstrates the full agent workflow in action:
 
-- **Implementation** (by develop-agent): A well-structured calculator module in `src/calculator.py` with 5 functions
-- **Testing** (by test-agent): Comprehensive test suite with 45 tests and 100% coverage
+- **Implementation** (by develop-agent): A well-structured calculator with isolated operation modules in `src/operations/`
+- **Testing** (by test-agent): Comprehensive test suite with 45 tests and 100% coverage across all modules
 - **Documentation** (by document-agent): Complete documentation in `CALCULATOR.md`
+
+### Architecture Highlights
+
+The calculator features a clean modular design:
+- **operations/** package with isolated modules for each operation (add, subtract, multiply, divide)
+- **calculator.py** with a unified `calculate()` dispatcher
+- **Full backward compatibility** - all existing code continues to work
+- **100% test coverage** maintained across all modules
 
 📖 **See [CALCULATOR.md](CALCULATOR.md) for full calculator documentation**
 
