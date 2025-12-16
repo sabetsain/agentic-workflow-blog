@@ -5,66 +5,7 @@ This module implements a simple calculator with support for addition,
 subtraction, multiplication, and division operations.
 """
 
-
-def add(a, b):
-    """
-    Add two numbers.
-
-    Args:
-        a (int or float): First number
-        b (int or float): Second number
-
-    Returns:
-        int or float: Sum of a and b
-    """
-    return a + b
-
-
-def subtract(a, b):
-    """
-    Subtract second number from first number.
-
-    Args:
-        a (int or float): First number
-        b (int or float): Second number
-
-    Returns:
-        int or float: Difference of a and b
-    """
-    return a - b
-
-
-def multiply(a, b):
-    """
-    Multiply two numbers.
-
-    Args:
-        a (int or float): First number
-        b (int or float): Second number
-
-    Returns:
-        int or float: Product of a and b
-    """
-    return a * b
-
-
-def divide(a, b):
-    """
-    Divide first number by second number.
-
-    Args:
-        a (int or float): Numerator
-        b (int or float): Denominator
-
-    Returns:
-        float: Quotient of a and b
-
-    Raises:
-        ValueError: If b is zero (division by zero)
-    """
-    if b == 0:
-        raise ValueError("Cannot divide by zero")
-    return a / b
+from .operations import add, subtract, multiply, divide
 
 
 def calculate(operation, a, b):
